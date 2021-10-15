@@ -193,20 +193,27 @@ namespace BankSystem
             string tempNama = Console.ReadLine();
             Console.Write($"User ID              : ");
             string tempId = Console.ReadLine();
-            string tempPass;
-            string confirmPass
-            //Console.Write("Password             :");
-            //string tempPass = Console.ReadLine();
-            //Console.Write("Konfirmasi Password  :");
-            //string confirmPass = Console.ReadLine();
+            Console.Write("Password             :");
+            string tempPass = Console.ReadLine();
+            Console.Write("Konfirmasi Password  :");
+            string confirmPass = Console.ReadLine();
 
             bool passwordOk = false;
-            //if (tempPass == confirmPass)
-            //{
-            //    passwordOk = true;
-            //}
-            //else
-            //{ passwordOk = false; }
+            if (tempPass == confirmPass)
+            {
+                passwordOk = true;
+                dataNasabah.Add(new Nasabah(tempNama, tempId, tempPass));
+                Console.WriteLine("Data berhasil diregistrasi, silahkan login untuk bertransaksi");
+                Console.ReadLine();
+                Console.Clear();
+            }
+            else
+            { 
+                passwordOk = false;
+                Console.WriteLine("Password tidak sesuai, silahkan ulangi");
+                Console.ReadKey();
+                Console.Clear();
+            }
 
             while (passwordOk = false)
             {
@@ -216,14 +223,17 @@ namespace BankSystem
                 Console.Write($"Nama lengkap         : {tempNama}");
                 Console.Write($"User ID              : {tempId}");
                 Console.Write("Password             :");
-                string tempPass = Console.ReadLine();
+                tempPass = Console.ReadLine();
                 Console.Write("Konfirmasi Password  :");
-                string confirmPass = Console.ReadLine();
+                confirmPass = Console.ReadLine();
 
-                bool passwordOk = false;
                 if (tempPass == confirmPass)
                 {
                     passwordOk = true;
+                    dataNasabah.Add(new Nasabah(tempNama, tempId, tempPass));
+                    Console.WriteLine("Data berhasil diregistrasi, silahkan login untuk bertransaksi");
+                    Console.ReadLine();
+
                 }
                 else
                 { passwordOk = false; }
@@ -233,10 +243,6 @@ namespace BankSystem
 
             //}
 
-            dataNasabah.Add(new Nasabah(tempNama, tempId, tempPass));
-            Console.WriteLine("Data berhasil diregistrasi, silahkan login untuk bertransaksi");
-            Console.ReadLine();
-            Console.Clear();
         }
     }
 }
