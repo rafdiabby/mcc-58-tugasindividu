@@ -26,7 +26,7 @@ namespace BankSystem
         {
             this.namaNasabah = namaNasabah;
             this.idNasabah = idNasabah;
-            this.passwordNasabah = passwordNasabah;
+            this.passwordNasabah = BCrypt.Net.BCrypt.HashPassword(passwordNasabah);
             this.saldoNasabah = saldoNasabah;
             this.biayaTransaksi = 6500f;
         }

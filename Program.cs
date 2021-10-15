@@ -45,7 +45,22 @@ namespace BankSystem
             Console.WriteLine(" 3. Keluar");
             Console.WriteLine("");
             Console.Write("Silahkan ketik menu yang diinginkan lalu tekan enter...  ");
-            menu = int.Parse(Console.ReadLine());
+            //menu = int.Parse(Console.ReadLine());
+            menu = 0;
+            try
+            {
+                menu = Convert.ToInt32(Console.ReadLine());
+                if (menu > 3)
+                {
+                    throw new FormatException();
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Silahkan pilih menu dari 1 hingga 3.");
+                Console.ReadLine();
+                Console.Clear();
+            }
         }
 
         public static void MenuLogin(List<Nasabah> dataNasabah)
@@ -61,11 +76,20 @@ namespace BankSystem
             foreach (var data in dataNasabah)
             {
                 
-                if (userId == data.idNasabah && password == data.passwordNasabah)
+                if (userId == data.idNasabah)
                 {
+                    if (BCrypt.Net.BCrypt.Verify(password, data.passwordNasabah))
+                    {
+                        Transaksi(dataNasabah, id);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Password salah, silahkan ulangi");
+                        Console.ReadKey();
+                        Console.Clear();
+                    }
                     
-                    Transaksi(dataNasabah, id);
-                    break;
                 }
                 else if (id == dataNasabah.Count - 1)
                 {
@@ -165,12 +189,49 @@ namespace BankSystem
             Console.Clear();
             Console.WriteLine("Silahkan masukkan data yang dibutuhkan seperti pada form berikut :");
             Console.WriteLine("-------------------------------------------------------------------");
-            Console.Write("Nama lengkap     :");
+            Console.Write($"Nama lengkap         : ");
             string tempNama = Console.ReadLine();
-            Console.Write("User ID          :");
+            Console.Write($"User ID              : ");
             string tempId = Console.ReadLine();
-            Console.Write("Password         :");
-            string tempPass = Console.ReadLine();
+            string tempPass;
+            string confirmPass
+            //Console.Write("Password             :");
+            //string tempPass = Console.ReadLine();
+            //Console.Write("Konfirmasi Password  :");
+            //string confirmPass = Console.ReadLine();
+
+            bool passwordOk = false;
+            //if (tempPass == confirmPass)
+            //{
+            //    passwordOk = true;
+            //}
+            //else
+            //{ passwordOk = false; }
+
+            while (passwordOk = false)
+            {
+                Console.Clear();
+                Console.WriteLine("Silahkan masukkan data yang dibutuhkan seperti pada form berikut :");
+                Console.WriteLine("-------------------------------------------------------------------");
+                Console.Write($"Nama lengkap         : {tempNama}");
+                Console.Write($"User ID              : {tempId}");
+                Console.Write("Password             :");
+                string tempPass = Console.ReadLine();
+                Console.Write("Konfirmasi Password  :");
+                string confirmPass = Console.ReadLine();
+
+                bool passwordOk = false;
+                if (tempPass == confirmPass)
+                {
+                    passwordOk = true;
+                }
+                else
+                { passwordOk = false; }
+            }
+            //if (Console.ReadLine() == tempPass))
+            //{
+
+            //}
 
             dataNasabah.Add(new Nasabah(tempNama, tempId, tempPass));
             Console.WriteLine("Data berhasil diregistrasi, silahkan login untuk bertransaksi");
